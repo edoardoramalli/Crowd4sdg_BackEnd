@@ -1,0 +1,10 @@
+
+.idea/
+
+Filter/__pycache__/
+
+Filter/Filters/__pycache__/
+
+Main/__pycache__/
+
+Filter/migrations/
