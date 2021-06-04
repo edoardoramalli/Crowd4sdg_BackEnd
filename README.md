@@ -39,3 +39,31 @@ nohup python /path/to/file/manage.py runserver 7777
 - 'nohup' keeps the services 'alive' even if you close the ssh connection
 - '7777' is the port on which the services are provided
  
+ 
+## Using the service:
+
+### EndPoints
+
+To apply a filter(s) on a csv file, we can leverage two endpoints: 
+- Get Request : http://127.0.0.1:7777/Filter/API/filterImageURL
+- Post Request : http://127.0.0.1:7777/Filter/API/filterImage
+
+### Parameters
+
+The endpoints accepts the following parameters:
+- 'filter_name_list' --> accept a list of filter names. Each filter is apply one after the other. The supported filter are 'PeopleDetector', 'MemeDetector', ‘PublicPrivateClassifier'
+- ‘confidence_threshold_list' --> confidence threshold list. If the confidence of a filter over a twitter is below the confidence_threshold, then the twitter is discarded. The first element in this list is related to the threshold of the first filter in filter_name_list, and so on.
+- 'column_name' --> the name of the column of the input csv under which could be found the media url link
+
+In case of the GET request, we need an additional parameter:
+- 'csv_url' --> the url where the machine can download the input csv file 
+
+In case of the POST request, we need an additional parameter:
+- 'csv_file' --> the string that represents the input csv file
+
+Pay attention: until now we have blocking requests. The suggestion is not to use big csv files. Start with csv with very few rows (each rows is a
+twitter) and incrementally increase the number.
+
+### Example GET request
+- this request filters the test CSV file at https://drive.google.com/uc?export=download&id=12hy5NRkFiNG2lI9t6oXQ_12_QDUQz94c with 3 consecutive filters: People Detector, MemeDetector,PublicPrivateClassifier, setting the confidence thresholds to be 0.98, 0.89, and 0.93 respectively.
+- http://127.0.0.1:7777/Filter/API/filterImageURL?filter_name_list=PeopleDetector&filter_name_list=MemeDetector&filter_name_list=PublicPrivateClassifier&confidence_threshold_list=0.98&confidence_threshold_list=0.89&confidence_threshold_list=0.93&column_name=media_url&csv_url=https%3A%2F%2Fdrive.google.com%2Fuc%3Fexport%3Ddownload%26id%3D12hy5NRkFiNG2lI9t6oXQ_12_QDUQz94c
