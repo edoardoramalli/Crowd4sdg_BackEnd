@@ -47,7 +47,7 @@ def filter(df, column_name, filter_name_list, confidence_threshold_list):
         for filter_name in filter_name_list:
             c_filter = available_filters[filter_name]
             accepted, confidence, detailed_out = c_filter.classify(pil_image=image_data)
-            if accepted and confidence >= threshold[filter_name]:
+            if accepted and confidence >= float(threshold[filter_name]):
                 df.loc[index, filter_name] = confidence
 
     df = df.dropna(subset=list(available_filters.keys()))
@@ -61,6 +61,13 @@ def filter(df, column_name, filter_name_list, confidence_threshold_list):
     response['Content-Disposition'] = 'attachment; filename=result.csv'
     return response
 
+
+
+@api_view(['GET'])
+def CheckConnection(request):
+    # DO MY STUff
+
+    return Response('Hi professor!', HTTP_200_OK)
 
 @api_view(['GET'])
 def filterImageURL(request):
@@ -86,7 +93,7 @@ def filterImageURL(request):
     csv_url = str(csv_url[0])
 
     for confidence in confidence_threshold_list:
-        if not 0 <= confidence <= 1:
+        if not 0 <= float(confidence) <= 1:
             return Response("filterImage. 'confidence_threshold' value '{}' is not valid.".format(confidence_threshold_list),
                             status=HTTP_400_BAD_REQUEST)
 
@@ -127,7 +134,7 @@ def filterImage(request):
         return Response("filterImage. 'confidence_threshold' parameters is not valid.", status=HTTP_400_BAD_REQUEST)
 
     for confidence in confidence_threshold_list:
-        if not 0 <= confidence <= 1:
+        if not 0 <= float(confidence) <= 1:
             return Response("filterImage. 'confidence_threshold' value '{}' is not valid.".format(confidence_threshold_list),
                             status=HTTP_400_BAD_REQUEST)
 
