@@ -69,6 +69,11 @@ twitter) and incrementally increase the number.
 The request below filters a test CSV file at https://drive.google.com/uc?export=download&id=12hy5NRkFiNG2lI9t6oXQ_12_QDUQz94c using 3 consecutive filters: People Detector, MemeDetector,PublicPrivateClassifier, setting the confidence thresholds for the filters to be 0.98, 0.89, and 0.93 respectively:
 - http://127.0.0.1:7777/Filter/API/filterImageURL?filter_name_list=PeopleDetector&filter_name_list=MemeDetector&filter_name_list=PublicPrivateClassifier&confidence_threshold_list=0.98&confidence_threshold_list=0.89&confidence_threshold_list=0.93&column_name=media_url&csv_url=https%3A%2F%2Fdrive.google.com%2Fuc%3Fexport%3Ddownload%26id%3D12hy5NRkFiNG2lI9t6oXQ_12_QDUQz94c
 
+### Example POST request from Python
+
+This request below filters the a CSV file in variable .... 
+....TODO .....
+
 ## Render a new HTML Page
 
 1. Add the html file (e.g. example.html) into the templates folder
