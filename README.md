@@ -65,12 +65,14 @@ Pay attention: until now we have blocking requests. The suggestion is not to use
 twitter) and incrementally increase the number.
 
 ### Example GET request
-- this request filters the test CSV file at https://drive.google.com/uc?export=download&id=12hy5NRkFiNG2lI9t6oXQ_12_QDUQz94c with 3 consecutive filters: People Detector, MemeDetector,PublicPrivateClassifier, setting the confidence thresholds to be 0.98, 0.89, and 0.93 respectively.
+
+The request below filters a test CSV file at https://drive.google.com/uc?export=download&id=12hy5NRkFiNG2lI9t6oXQ_12_QDUQz94c using 3 consecutive filters: People Detector, MemeDetector,PublicPrivateClassifier, setting the confidence thresholds for the filters to be 0.98, 0.89, and 0.93 respectively:
 - http://127.0.0.1:7777/Filter/API/filterImageURL?filter_name_list=PeopleDetector&filter_name_list=MemeDetector&filter_name_list=PublicPrivateClassifier&confidence_threshold_list=0.98&confidence_threshold_list=0.89&confidence_threshold_list=0.93&column_name=media_url&csv_url=https%3A%2F%2Fdrive.google.com%2Fuc%3Fexport%3Ddownload%26id%3D12hy5NRkFiNG2lI9t6oXQ_12_QDUQz94c
 
 ## Render a new HTML Page
+
 1. Add the html file (e.g. example.html) into the templates folder
-2. Create a new endpoint in the url python file
+2. Create a new endpoint in the Main/urls.py python file
 ```
     path('example', example_function, name='example'),
 ```
