@@ -8,3 +8,7 @@ Filter/Filters/__pycache__/
 Main/__pycache__/
 
 Filter/migrations/
+
+db.sqlite3
+
+Files/FilterModels/

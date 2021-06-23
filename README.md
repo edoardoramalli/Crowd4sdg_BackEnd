@@ -38,6 +38,7 @@ nohup python /path/to/file/manage.py runserver 0.0.0.0:7777
 - 'crowd' is the name of the anaconda environment created before
 - 'nohup' keeps the services 'alive' even if you close the ssh connection
 - '7777' is the port on which the services are provided
+<<<<<<< Updated upstream
  
  
 ## Using the service:
@@ -88,3 +89,6 @@ This request below filters the a CSV file in variable ....
     def example_function(request):
         return render(request, 'example.html')
 ```
+=======
+ 
+>>>>>>> Stashed changes
