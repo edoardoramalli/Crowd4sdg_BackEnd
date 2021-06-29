@@ -20,7 +20,7 @@ class PeopleDetector(Filter):
 
         self.min_people = 1
 
-        self.detailed_output = True
+        self.detailed_output = False
 
     def classify(self, pil_image):
         # Loading image

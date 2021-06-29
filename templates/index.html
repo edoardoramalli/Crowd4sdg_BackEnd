@@ -6,21 +6,21 @@
 <!-- VVVVVV -->
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Corwd4SDG API" />
-    <meta name="keywords" content="API, Image Classification, Twitter, CrowdSource, Image Filteration" />
-    <meta name="author" content="SK" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="Corwd4SDG API"/>
+    <meta name="keywords" content="API, Image Classification, Twitter, CrowdSource, Image Filteration"/>
+    <meta name="author" content="SK"/>
 
     <title>API</title>
 
     <!-- *** favicon *** -->
-    <link rel="shortcut icon" href="./assets/img/favicon.ico" />
+    <link rel="shortcut icon" href="./assets/img/favicon.ico"/>
 
     <!-- *** Bootstrap CSS *** -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
-        integrity="sha512-Ez0cGzNzHR1tYAv56860NLspgUGuQw16GiOOp/I2LuTmpSK9xDXlgJz3XN4cnpXWDmkNBKXR/VDMTCnAaEooxA=="
-        crossorigin="anonymous">
+          integrity="sha512-Ez0cGzNzHR1tYAv56860NLspgUGuQw16GiOOp/I2LuTmpSK9xDXlgJz3XN4cnpXWDmkNBKXR/VDMTCnAaEooxA=="
+          crossorigin="anonymous">
 
     <!-- *** Optional CSS *** -->
     <style>
@@ -67,424 +67,472 @@
 <!-- V****V -->
 
 <body>
-    <header class="pb-2"></header>
+<header class="pb-2"></header>
 
-    <div class="container pt-2">
+<div class="container pt-2">
 
-        <!-- *** GET/POST Method *** -->
-        <div class="row allways">
-            <div class="col-10 col-sm-6 col-md-5 col-lg-4 col-xl-3">
-                <p>How to receive the CSV file:</p>
-                <select class="form-select" aria-label="GET POST method selection">
-                    <option value="removeAll" selected>Choose a method</option>
-                    <option value="methodGET">URL (GET request)</option>
-                    <option value="methodPOST">Upload (POST request)</option>
-                </select>
-            </div>
+    <!-- *** GET/POST Method *** -->
+    <div class="row allways">
+        <div class="col-10 col-sm-6 col-md-5 col-lg-4 col-xl-3">
+            <p>How to receive the CSV file:</p>
+            <select class="form-select" aria-label="GET POST method selection">
+                <option value="removeAll" selected>Choose a method</option>
+                <option value="methodGET">URL (GET request)</option>
+                <option value="methodPOST">Upload (POST request)</option>
+            </select>
         </div>
-
-        <br />
-
-        <!-- *** FILE *** -->
-        <div class="row d-none" id="csvFileSection">
-            <div class="col-10 col-sm-6 col-md-5 col-lg-4 col-xl-3">
-                <p>Choose the CSV file:</p>
-                <form>
-                    <label for="load-csv" class="custom-file-upload"><i class="fa fa-cloud-upload"></i>Load CSV</label>
-                    <input id="load-csv" class="urls" name="upload_csv_file" type="file" style="display: none" />
-                </form>
-            </div>
-        </div>
-
-        <!-- *** LINK *** -->
-        <div class="row d-none" id="csvLinkSection">
-            <div class="col-10 col-sm-6 col-md-5 col-lg-4 col-xl-5">
-                <p>Enter the URL:</p>
-                <div class="input-group">
-                    <input type="text" class="form-control urls" id="urls" value="https://drive.google.com/"
-                        placeholder="https://drive.google.com/" aria-label="CSV URL" onfocus="this.value='';">
-                </div>
-            </div>
-        </div>
-
-        <br />
-
-        <!-- *** Choose column name *** -->
-        <div class="row d-none" id="columnNameListParent">
-            <div class="col-10 col-sm-6 col-md-5 col-lg-4 col-xl-3">
-                <p>Choose the column name:</p>
-                <select class="form-select columns" aria-label="Column name selection" id="columnNameList">
-                    <!-- The JS will add the column names as options -->
-                </select>
-            </div>
-        </div>
-
-        <!-- *** Enter the column name *** -->
-        <div class="row d-none" id="columnNameboxParent">
-            <div class="col-10 col-sm-6 col-md-5 col-lg-4 col-xl-3">
-                <p>Enter the column name:</p>
-                <div class="input-group">
-                    <input type="text" class="form-control columns" id="columns" value="media_url"
-                        placeholder="media_url" aria-label="column name media url" onfocus="this.value='';">
-                </div>
-            </div>
-        </div>
-
-        </br>
-
-        <!-- *** Filters *** -->
-        <div class="row d-none" id="filterSelection">
-            <div class="col-12 col-sm-12 col-md-10 col-lg-8 col-xl-8">
-                <p>Choose the filters and define their confidence:</p>
-
-                <!-- *** Filter1 *** -->
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <select class="form-select" id="filter1" aria-label="Filter selection">
-                            <option disabled selected value="none">Choose a filter</option>
-                            <option value="PeopleDetector">People Detector</option>
-                            <option value="MemeDetector">Meme Detector</option>
-                            <option value="PublicPrivateClassifier">Public-Private Classifier</option>
-                        </select>
-                    </div>
-                    <input type="text" class="form-control" id="threshold1" aria-label="Text input with dropdown button"
-                        onfocus="this.value='';">
-                </div>
-
-                <br />
-
-                <!-- *** Filter2 *** -->
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <select class="form-select" id="filter2" aria-label="Filter selection">
-                            <option disabled selected value="none">Choose a filter</option>
-                            <option value="PeopleDetector">People Detector</option>
-                            <option value="MemeDetector">Meme Detector</option>
-                            <option value="PublicPrivateClassifier">Public-Private Classifier</option>
-                        </select>
-                    </div>
-                    <input type="text" class="form-control" id="threshold2" aria-label="Text input with dropdown button"
-                        onfocus="this.value='';">
-                </div>
-
-                <br />
-
-                <!-- *** Filter3 *** -->
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <select class="form-select" id="filter3" aria-label="Filter selection">
-                            <option disabled selected value="none">Choose a filter</option>
-                            <option value="PeopleDetector">People Detector</option>
-                            <option value="MemeDetector">Meme Detector</option>
-                            <option value="PublicPrivateClassifier">Public-Private Classifier</option>
-                        </select>
-                    </div>
-                    <input type="text" class="form-control" id="threshold3" aria-label="Text input with dropdown button"
-                        onfocus="this.value='';">
-                </div>
-
-            </div>
-        </div>
-
-        <br />
-        </br>
-
-        <div class="row d-none" id="submitSection">
-            <div class="col-10 col-sm-6 col-md-5 col-lg-4 col-xl-3">
-                <button type="button" class="btn btn-primary">Sumbit</button>
-            </div>
-        </div>
-
     </div>
 
-    <!-- *** jQuery first, then Popper.js, then Bootstrap JS *** -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    <br/>
+
+    <!-- *** FILE *** -->
+    <div class="row d-none" id="csvFileSection">
+        <div class="col-10 col-sm-6 col-md-5 col-lg-4 col-xl-3">
+            <p>Choose the CSV file:</p>
+            <form>
+                <label for="load-csv" class="custom-file-upload"><i class="fa fa-cloud-upload"></i>Load CSV</label>
+                <input id="load-csv" class="urls" name="upload_csv_file" type="file" style="display: none"/>
+            </form>
+        </div>
+    </div>
+
+    <!-- *** LINK *** -->
+    <div class="row d-none" id="csvLinkSection">
+        <div class="col-10 col-sm-6 col-md-5 col-lg-4 col-xl-5">
+            <p>Enter the URL:</p>
+            <div class="input-group">
+                <input type="text" class="form-control urls" id="urls" value="https://drive.google.com/"
+                       placeholder="https://drive.google.com/" aria-label="CSV URL" onfocus="this.value='';">
+            </div>
+        </div>
+    </div>
+
+    <br/>
+
+    <!-- *** Choose column name *** -->
+    <div class="row d-none" id="columnNameListParent">
+        <div class="col-10 col-sm-6 col-md-5 col-lg-4 col-xl-3">
+            <p>Choose the column name:</p>
+            <select class="form-select columns" aria-label="Column name selection" id="columnNameList">
+                <!-- The JS will add the column names as options -->
+            </select>
+        </div>
+    </div>
+
+    <!-- *** Enter the column name *** -->
+    <div class="row d-none" id="columnNameboxParent">
+        <div class="col-10 col-sm-6 col-md-5 col-lg-4 col-xl-3">
+            <p>Enter the column name:</p>
+            <div class="input-group">
+                <input type="text" class="form-control columns" id="columns" value="media_url"
+                       placeholder="media_url" aria-label="column name media url" onfocus="this.value='';">
+            </div>
+        </div>
+    </div>
+
+    </br>
+
+    <!-- *** Filters *** -->
+    <div class="row d-none" id="filterSelection">
+        <div class="col-12 col-sm-12 col-md-10 col-lg-8 col-xl-8">
+            <p>Choose the filters and define their confidence:</p>
+
+            <!-- *** Filter1 *** -->
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <select class="form-select" id="filter1" aria-label="Filter selection">
+                        <option disabled selected value="none">Choose a filter</option>
+                        <option value="PeopleDetector">People Detector</option>
+                        <option value="MemeDetector">Meme Detector</option>
+                        <option value="PublicPrivateClassifier">Public-Private Classifier</option>
+                    </select>
+                </div>
+                <input type="text" class="form-control" id="threshold1" aria-label="Text input with dropdown button"
+                       onfocus="this.value='';">
+            </div>
+
+            <br/>
+
+            <!-- *** Filter2 *** -->
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <select class="form-select" id="filter2" aria-label="Filter selection">
+                        <option disabled selected value="none">Choose a filter</option>
+                        <option value="PeopleDetector">People Detector</option>
+                        <option value="MemeDetector">Meme Detector</option>
+                        <option value="PublicPrivateClassifier">Public-Private Classifier</option>
+                    </select>
+                </div>
+                <input type="text" class="form-control" id="threshold2" aria-label="Text input with dropdown button"
+                       onfocus="this.value='';">
+            </div>
+
+            <br/>
+
+            <!-- *** Filter3 *** -->
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <select class="form-select" id="filter3" aria-label="Filter selection">
+                        <option disabled selected value="none">Choose a filter</option>
+                        <option value="PeopleDetector">People Detector</option>
+                        <option value="MemeDetector">Meme Detector</option>
+                        <option value="PublicPrivateClassifier">Public-Private Classifier</option>
+                    </select>
+                </div>
+                <input type="text" class="form-control" id="threshold3" aria-label="Text input with dropdown button"
+                       onfocus="this.value='';">
+            </div>
+
+        </div>
+    </div>
+
+    <br/>
+    </br>
+
+    <div class="row d-none" id="submitSection">
+        <div class="col-10 col-sm-6 col-md-5 col-lg-4 col-xl-3">
+            <button type="button" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+
+</div>
+
+<!-- *** jQuery first, then Popper.js, then Bootstrap JS *** -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"
         integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
         crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
         integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g=="
         crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
         integrity="sha512-EKWWs1ZcA2ZY9lbLISPz8aGR2+L7JVYqBAYTq5AXgBkSjRSuQEGqWx8R1zAX16KdXPaCjOCaKE8MCpU0wcHlHA=="
         crossorigin="anonymous"></script>
 
-    <!-- *** Optional JavaScript *** -->
-    <script>
-        var file
-        var configSet = {
-            method: "",
-            csv_url: "",
-            col_name: "",
-            filters: [],
-            confidence_thresholds: []
-        }
-        const URL = {
-            host: window.location.href,
-            // host: 'http://131.175.120.2:7777/',
-            api_get: 'Filter/API/filterImageURL',
-            api_psot: 'Filter/API/filterImage'
-        }
-        const threshold = {
-            PeopleDetector: 0.98,
-            MemeDetector: 0.89,
-            PublicPrivateClassifier: 0.93
-        }
+<!-- *** Optional JavaScript *** -->
+<script>
+    var file
+    var configSet = {
+        method: "",
+        csv_url: "",
+        csv_file: "",
+        col_name: "",
+        filters: [],
+        confidence_thresholds: []
+    }
+    const URL = {
+        host: window.location.href,
+        // host: 'http://131.175.120.2:7777/',
+        api_get: 'Filter/API/filterImageURL',
+        api_psot: 'Filter/API/filterImage'
+    }
+    const threshold = {
+        PeopleDetector: 0.98,
+        MemeDetector: 0.89,
+        PublicPrivateClassifier: 0.93
+    }
 
-        /* Copyright 2012-2013 Daniel Tillin -- csvToArray v2.1 (Unminifiled for development) -- http://code.google.com/p/csv-to-array/ */
-        String.prototype.csvToArray = function (o) {
-            var od = {
-                'fSep': ',',
-                'rSep': '\n',
-                'quot': '"',
-                'head': false,
-                'trim': false
+    /* Copyright 2012-2013 Daniel Tillin -- csvToArray v2.1 (Unminifiled for development) -- http://code.google.com/p/csv-to-array/ */
+    String.prototype.csvToArray = function (o) {
+        var od = {
+            'fSep': ',',
+            'rSep': '\n',
+            'quot': '"',
+            'head': false,
+            'trim': false
+        }
+        if (o) {
+            for (var i in od) {
+                if (!o[i]) o[i] = od[i]
             }
-            if (o) {
-                for (var i in od) {
-                    if (!o[i]) o[i] = od[i]
-                }
-            } else {
-                o = od
-            }
-            var a = [
-                ['']
-            ]
-            for (var r = f = p = q = 0; p < this.length; p++) {
-                switch (c = this.charAt(p)) {
-                    case o.quot:
-                        if (q && this.charAt(p + 1) == o.quot) {
-                            a[r][f] += o.quot
-                            ++p
-                        } else {
-                            q ^= 1
+        } else {
+            o = od
+        }
+        var a = [
+            ['']
+        ]
+        for (var r = f = p = q = 0; p < this.length; p++) {
+            switch (c = this.charAt(p)) {
+                case o.quot:
+                    if (q && this.charAt(p + 1) == o.quot) {
+                        a[r][f] += o.quot
+                        ++p
+                    } else {
+                        q ^= 1
+                    }
+                    break
+                case o.fSep:
+                    if (!q) {
+                        if (o.trim) {
+                            a[r][f] = a[r][f].replace(/^\s\s*/, '').replace(/\s\s*$/, '')
                         }
-                        break
-                    case o.fSep:
-                        if (!q) {
-                            if (o.trim) {
-                                a[r][f] = a[r][f].replace(/^\s\s*/, '').replace(/\s\s*$/, '')
-                            }
-                            a[r][++f] = ''
-                        } else {
-                            a[r][f] += c
-                        }
-                        break
-                    case o.rSep.charAt(0):
-                        if (!q && (!o.rSep.charAt(1) || (o.rSep.charAt(1) && o.rSep.charAt(1) == this.charAt(p + 1)))) {
-                            if (o.trim) {
-                                a[r][f] = a[r][f].replace(/^\s\s*/, '').replace(/\s\s*$/, '')
-                            }
-                            a[++r] = ['']
-                            a[r][f = 0] = ''
-                            if (o.rSep.charAt(1)) {
-                                ++p
-                            }
-                        } else {
-                            a[r][f] += c
-                        }
-                        break
-                    default:
+                        a[r][++f] = ''
+                    } else {
                         a[r][f] += c
-                }
+                    }
+                    break
+                case o.rSep.charAt(0):
+                    if (!q && (!o.rSep.charAt(1) || (o.rSep.charAt(1) && o.rSep.charAt(1) == this.charAt(p + 1)))) {
+                        if (o.trim) {
+                            a[r][f] = a[r][f].replace(/^\s\s*/, '').replace(/\s\s*$/, '')
+                        }
+                        a[++r] = ['']
+                        a[r][f = 0] = ''
+                        if (o.rSep.charAt(1)) {
+                            ++p
+                        }
+                    } else {
+                        a[r][f] += c
+                    }
+                    break
+                default:
+                    a[r][f] += c
             }
-            if (o.head) {
-                a.shift()
-            }
-            if (a[a.length - 1].length < a[0].length) {
-                a.pop()
-            }
-            return a
         }
+        if (o.head) {
+            a.shift()
+        }
+        if (a[a.length - 1].length < a[0].length) {
+            a.pop()
+        }
+        return a
+    }
 
-        /********** load CSV locally **********/
-        $('#load-csv').change(function () {
-            let i = $(this).prev('label').clone()
-            file = $('#load-csv')[0].files[0]
-            $(this).prev('label').text(file.name)
-            if (file) {
-                let reader = new FileReader()
-                reader.addEventListener('load', function (e) {
-                    let text = e.target.result
-                    firstRow = text.csvToArray()[0]
-                    createDropDown(firstRow)
-                })
-                reader.addEventListener('error', function () {
-                    alert('Error : Failed to read file')
-                })
-                reader.readAsText(file)
-            }
-        })
-
-        /* create the column names dropdown list */
-        function createDropDown(inputList) {
-            $("div[id='columnNameListParent']").removeClass('d-none')
-            deletChild('columnNameList')
-            var dropdown = $('#columnNameList')
-            dropdown.append($('<option>').attr({ value: 'none', label: 'Choose a column' }))
-            inputList.forEach(element => {
-                var entry = $('<option>').attr({ value: element, label: element })
-                dropdown.append(entry)
+    /********** load CSV locally **********/
+    $('#load-csv').change(function () {
+        let i = $(this).prev('label').clone()
+        const file = $('#load-csv')[0].files[0]
+        $(this).prev('label').text(file.name)
+        if (file) {
+            let reader = new FileReader()
+            reader.addEventListener('load', function (e) {
+                let text = e.target.result
+                firstRow = text.csvToArray()[0]
+                createDropDown(firstRow)
             })
+            reader.addEventListener('error', function () {
+                alert('Error : Failed to read file')
+            })
+            reader.readAsText(file)
+        }
+    })
+
+    /* create the column names dropdown list */
+    function createDropDown(inputList) {
+        $("div[id='columnNameListParent']").removeClass('d-none')
+        deletChild('columnNameList')
+        var dropdown = $('#columnNameList')
+        dropdown.append($('<option>').attr({value: 'none', label: 'Choose a column'}))
+        inputList.forEach(element => {
+            var entry = $('<option>').attr({value: element, label: element})
+            dropdown.append(entry)
+        })
+        $("div[id='filterSelection']").removeClass('d-none')
+        $("div[id='submitSection']").removeClass('d-none')
+    }
+
+    /********** main selection **********/
+    $('select').change(function () {
+        // get the default values
+        getDefault_URL_columnName()
+
+        var selectedValue = $(this).val()
+        if (selectedValue == 'methodGET') {
+            configSet.method = 'GET'
+            // Hide ALL
+            $("div[class='row']").addClass('d-none')
+
+            //Show GET
+            $("div[id='csvLinkSection']").removeClass('d-none')
+            $("div[id='columnNameboxParent']").removeClass('d-none')
             $("div[id='filterSelection']").removeClass('d-none')
             $("div[id='submitSection']").removeClass('d-none')
+
+        } else if (selectedValue == 'methodPOST') {
+            configSet.method = 'POST'
+            //Hide ALL
+            $("div[class='row']").addClass('d-none')
+
+            //Show POST
+            $("div[id='csvFileSection']").removeClass('d-none')
+        } else if (selectedValue == 'removeAll') {
+            $("div[class='row']").addClass('d-none')
         }
+    })
 
-        /********** main selection **********/
-        $('select').change(function () {
-            // get the default values
-            getDefault_URL_columnName()
-
-            var selectedValue = $(this).val()
-            if (selectedValue == 'methodGET') {
-                configSet.method = 'GET'
-                // Hide ALL
-                $("div[class='row']").addClass('d-none')
-
-                //Show GET
-                $("div[id='csvLinkSection']").removeClass('d-none')
-                $("div[id='columnNameboxParent']").removeClass('d-none')
-                $("div[id='filterSelection']").removeClass('d-none')
-                $("div[id='submitSection']").removeClass('d-none')
-
-            } else if (selectedValue == 'methodPOST') {
-                configSet.method = 'POST'
-                //Hide ALL
-                $("div[class='row']").addClass('d-none')
-
-                //Show POST
-                $("div[id='csvFileSection']").removeClass('d-none')
-            }
-            else if (selectedValue == 'removeAll') {
-                $("div[class='row']").addClass('d-none')
-            }
-        })
-
-        /* remove children of an element specified by element ID */
-        function deletChild(id_element) {
-            var e = document.querySelector("#" + id_element)
-            var child = e.firstElementChild
-            while (child) {
-                e.removeChild(child)
-                child = e.lastElementChild
-            }
+    /* remove children of an element specified by element ID */
+    function deletChild(id_element) {
+        var e = document.querySelector("#" + id_element)
+        var child = e.firstElementChild
+        while (child) {
+            e.removeChild(child)
+            child = e.lastElementChild
         }
+    }
 
-        /********** URL and path **********/
-        $('.urls').change(function () {
-            var value = $(this).val()
-            configSet.csv_url = value
+    /********** URL and path **********/
+    $('.urls').change(function () {
+        var value = $(this).val()
+        configSet.csv_url = value
+    })
+
+    /********** column Name **********/
+    $('.columns').change(function () {
+        var value = $(this).val()
+        configSet.col_name = value
+    })
+
+    /********** get defualt values of URL and column Name **********/
+    function getDefault_URL_columnName(params) {
+        configSet.col_name = $('#columns').val()
+        configSet.csv_url = $('#urls').val()
+    }
+
+    /**********  filters **********/
+    $('#filter1').change(function () {
+        var value = $(this).val()
+        $('#threshold1').val(threshold[value]).change()
+        configSet.filters[0] = value
+    })
+    $('#filter2').change(function () {
+        var value = $(this).val()
+        $('#threshold2').val(threshold[value]).change()
+        configSet.filters[1] = value
+    })
+    $('#filter3').change(function () {
+        var value = $(this).val()
+        $('#threshold3').val(threshold[value]).change()
+        configSet.filters[2] = value
+    })
+
+    /**********  thresholds **********/
+    $('#threshold1').change(function () {
+        var value = $(this).val()
+        configSet.confidence_thresholds[0] = value
+    })
+    $('#threshold2').change(function () {
+        var value = $(this).val()
+        configSet.confidence_thresholds[1] = value
+    })
+    $('#threshold3').change(function () {
+        var value = $(this).val()
+        configSet.confidence_thresholds[2] = value
+    })
+
+    // Helper function to create the sophisticated url for API
+    function urlMaker() {
+        url_string = ""
+
+        // adding the first character
+        url_string = url_string.concat("?")
+
+        // concatinating the filternames
+        configSet.filters.forEach(element => {
+            url_string = url_string.concat('filter_name_list=', element, '&')
         })
 
-        /********** column Name **********/
-        $('.columns').change(function () {
-            var value = $(this).val()
-            configSet.col_name = value
+        // concatinating the thresholds
+        configSet.confidence_thresholds.forEach(element => {
+            url_string = url_string.concat('confidence_threshold_list=', element, '&')
         })
 
-        /********** get defualt values of URL and column Name **********/
-        function getDefault_URL_columnName(params) {
-            configSet.col_name = $('#columns').val()
-            configSet.csv_url = $('#urls').val()
-        }
+        // concatinating the column name
+        url_string = url_string.concat('column_name=', configSet.col_name, '&')
 
-        /**********  filters **********/
-        $('#filter1').change(function () {
-            var value = $(this).val()
-            $('#threshold1').val(threshold[value]).change()
-            configSet.filters[0] = value
-        })
-        $('#filter2').change(function () {
-            var value = $(this).val()
-            $('#threshold2').val(threshold[value]).change()
-            configSet.filters[1] = value
-        })
-        $('#filter3').change(function () {
-            var value = $(this).val()
-            $('#threshold3').val(threshold[value]).change()
-            configSet.filters[2] = value
-        })
+        // concatinating the CSV URL/Path
+        url_string = url_string.concat('csv_url=', encodeURIComponent(configSet.csv_url))
 
-        /**********  thresholds **********/
-        $('#threshold1').change(function () {
-            var value = $(this).val()
-            configSet.confidence_thresholds[0] = value
-        })
-        $('#threshold2').change(function () {
-            var value = $(this).val()
-            configSet.confidence_thresholds[1] = value
-        })
-        $('#threshold3').change(function () {
-            var value = $(this).val()
-            configSet.confidence_thresholds[2] = value
-        })
+        // remove the extra & sign in the loop
+        // url_string = url_string.slice(0, -1)
+        return url_string
+    }
 
-        // Helper function to create the sophisticated url for API
-        function urlMaker() {
-            url_string = ""
+    // CSV saver
+    function saveAsCSV(text, filename) {
+        var link = document.createElement('a')
+        link.setAttribute('href', 'data:text/csv;charset=urf-8,' + encodeURIComponent(text))
+        link.setAttribute('download', filename + '.csv')
+        link.click()
+    }
 
-            // adding the first character
-            url_string = url_string.concat("?")
+    // Defining the prototype for date and time
+    Date.prototype.now = function () {
+        return 'D' + this.getFullYear() + (((this.getMonth() + 1) < 10) ? "0" : "") + (this.getMonth() + 1) + ((this.getDate() < 10) ? "0" : "") + this.getDate() + 'T' + ((this.getHours() < 10) ? "0" : "") + this.getHours() + ((this.getMinutes() < 10) ? "0" : "") + this.getMinutes() + ((this.getSeconds() < 10) ? "0" : "") + this.getSeconds()
+    }
 
-            // concatinating the filternames
-            configSet.filters.forEach(element => {
-                url_string = url_string.concat('filter_name_list=', element, '&')
+    function csvToStream() {
+        const file = $('#load-csv')[0].files[0]
+        if (file) {
+            const reader = new FileReader()
+            reader.addEventListener('load', function (e) {
+                let text = e.target.result
+                configSet.csv_file = text
+                postSender()
             })
-
-            // concatinating the thresholds
-            configSet.confidence_thresholds.forEach(element => {
-                url_string = url_string.concat('confidence_threshold_list=', element, '&')
+            reader.addEventListener('error', function () {
+                alert('Error : Failed to read file')
             })
-
-            // concatinating the column name
-            url_string = url_string.concat('column_name=', configSet.col_name, '&')
-
-            // concatinating the CSV URL/Path
-            url_string = url_string.concat('csv_url=', encodeURIComponent(configSet.csv_url))
-
-            // remove the extra & sign in the loop
-            // url_string = url_string.slice(0, -1)
-            return url_string
+            reader.readAsText(file)
         }
+    }
 
-        // CSV saver
-        function saveAsCSV(text, filename) {
-            var link = document.createElement('a')
-            link.setAttribute('href', 'data:text/csv;charset=urf-8,' + encodeURIComponent(text))
-            link.setAttribute('download', filename + '.csv')
-            link.click()
+    function paramMaker() {
+        return `{'filter_name_list': '[${configSet.filters}]', 'confidence_threshold_list': '[${configSet.confidence_thresholds}]', 'column_name': '${configSet.col_name}', 'csv_file': '${configSet.csv_url}'}`
+    }
+
+    function postSender() {
+        const params = {
+            filter_name_list: configSet.filters,
+            confidence_threshold_list: configSet.confidence_thresholds,
+            column_name: configSet.col_name,
+            csv_file: configSet.csv_file
         }
-
-        // Defining the prototype for date and time
-        Date.prototype.now = function () {
-            return 'D' + this.getFullYear() + (((this.getMonth() + 1) < 10) ? "0" : "") + (this.getMonth() + 1) + ((this.getDate() < 10) ? "0" : "") + this.getDate() + 'T' + ((this.getHours() < 10) ? "0" : "") + this.getHours() + ((this.getMinutes() < 10) ? "0" : "") + this.getMinutes() + ((this.getSeconds() < 10) ? "0" : "") + this.getSeconds()
-        }
-
-        /**********  submit button **********/
-        var csv = ''
-        $("button").click(function () {
-            if (configSet.method == 'GET') {
-                // console.log(URL.host + URL.api_get + urlMaker())
-                fetch(URL.host + URL.api_get + urlMaker(), alert('Request Sent Successfully!\nPlease wait for the report file!')
-                ).then(function (response) {
-                    alert('Receiving the report file from server!')
-                    if (response.status !== 200) {
-                        console.log("Fetch response failed. Status Code: " + response.status)
-                        return Promise.reject(response)
-                    } else {
-                        return response.text()
-                    }
-                }).then(function (data) {
-                    saveAsCSV(data, 'report_' + new Date().now())
-                }).catch(function (error) {
-                    alert('There was an error happening!')
-                    console.log("Fetch JS failed: ", error)
-                })
-            } else if (configSet.method == 'POST') {
-                console.log(URL.host + URL.api_get + urlMaker())
+        alert('Request Sent Successfully!\nPlease wait for the report file!')
+        $.ajax({
+            type: "POST",
+            url: URL.host + URL.api_psot,
+            data: JSON.stringify(params),
+            contentType: "application/json",
+            success: function (result) {
+                // console.log(result);
+                saveAsCSV(result, 'report_' + new Date().now())
+            },
+            error: function (result, status) {
+                // console.log(result);
+                alert('There was an error.!' + result);
             }
-        })
+        });
+    }
 
-    </script>
+    /**********  submit button **********/
+    var csv = ''
+    $("button").click(function () {
+        if (configSet.method === 'GET') {
+            // console.log(URL.host + URL.api_get + urlMaker())
+            fetch(URL.host + URL.api_get + urlMaker(),
+                alert('Request Sent Successfully!\nPlease wait for the report file!')
+            ).then(function (response) {
+                alert('Receiving the report file from server!')
+                if (response.status !== 200) {
+                    // console.log("Fetch response failed. Status Code: " + response.status)
+                    return Promise.reject(response)
+                } else {
+                    return response.text()
+                }
+            }).then(function (data) {
+                saveAsCSV(data, 'report_' + new Date().now())
+            }).catch(function (error) {
+                alert('There was an error happening!')
+                // console.log("Fetch JS failed: ", error)
+            })
+        } else if (configSet.method === 'POST') {
+            csvToStream()
+            // console.log(JSON.stringify(paramMaker()))
+
+            // $.post(configSet.csv_url, function (data, status) { alert("Data: " + data + "\nStatus: " + status) })
+        }
+    })
+
+</script>
 
 </body>
 

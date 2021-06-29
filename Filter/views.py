@@ -50,7 +50,7 @@ def filter(df, column_name, filter_name_list, confidence_threshold_list):
             if accepted and confidence >= float(threshold[filter_name]):
                 df.loc[index, filter_name] = confidence
 
-    df = df.dropna(subset=list(available_filters.keys()))
+    df = df.dropna(subset=list(filter_name_list))
     result_csv = StringIO()
     df.to_csv(result_csv, index=False)
 
