@@ -37,20 +37,26 @@ def filter(df, column_name, filter_name_list, confidence_threshold_list):
                         status=HTTP_400_BAD_REQUEST)
 
     for index, row in df.iterrows():
-        url = str(row[column_name])
-        r = requests.get(url=url)
-        # path_image = os.path.join(sandbox, str(index)) + '.jpg'
-        # open(path_image, 'wb').write(r.content)
-        ImageFile.LOAD_TRUNCATED_IMAGES = True
-        # image_data = Image.open(path_image).convert('RGB')
-        image_data = Image.open(BytesIO(r.content)).convert('RGB')
-        for filter_name in filter_name_list:
-            c_filter = available_filters[filter_name]
-            accepted, confidence, detailed_out = c_filter.classify(pil_image=image_data)
-            if accepted and confidence >= float(threshold[filter_name]):
-                df.loc[index, filter_name] = confidence
+        try:
+            df.loc[index, 'Errors'] = ''
+            url = str(row[column_name])
+            r = requests.get(url=url)
+            # path_image = os.path.join(sandbox, str(index)) + '.jpg'
+            # open(path_image, 'wb').write(r.content)
+            ImageFile.LOAD_TRUNCATED_IMAGES = True
+            # image_data = Image.open(path_image).convert('RGB')
+            image_data = Image.open(BytesIO(r.content)).convert('RGB')
+            for filter_name in filter_name_list:
+                c_filter = available_filters[filter_name]
+                accepted, confidence, detailed_out = c_filter.classify(pil_image=image_data)
+                if accepted and confidence >= float(threshold[filter_name]):
+                    df.loc[index, filter_name] = confidence
+                else:
+                    df.loc[index, filter_name] = None
+        except Exception:
+            df.loc[index, 'Errors'] = 'Something went wrong'
 
-    df = df.dropna(subset=list(filter_name_list))
+    df = df.dropna(subset=list(set(filter_name_list).intersection(set(df.columns))))
     result_csv = StringIO()
     df.to_csv(result_csv, index=False)
 

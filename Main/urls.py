@@ -25,5 +25,6 @@ def home(request):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('Filter/', include('Filter.urls')),
+    path('Crawler/', include('Crawler.urls')),
     path('', home, name='home'),
 ]

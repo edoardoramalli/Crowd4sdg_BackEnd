@@ -20,11 +20,35 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
+
+
+class SettingsReader:
+    def __init__(self, path='SettingsFile'):
+        self.settings = {}
+        with open(path, 'r') as file:
+            for line in file:
+                line_split = line.strip().split("=")
+                key, value = line_split[0], line_split[1]
+                self.settings[key] = value
+
+
+# # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+SettingsReader = SettingsReader(os.path.join(BASE_DIR, 'Main', 'SettingsFile'))
+
+TWITTER_CONSUMER_KEY = SettingsReader.settings['TWITTER_CONSUMER_KEY']
+TWITTER_CONSUMER_SECRET = SettingsReader.settings['TWITTER_CONSUMER_SECRET']
+
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-xesttc-k(_7ny#f^^ca2yxsh2dya+5vowz*#72=cw1#p00n=f#'
+SECRET_KEY = SettingsReader.settings['SECRET_KEY']
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 

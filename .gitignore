@@ -12,3 +12,7 @@ Filter/migrations/
 db.sqlite3
 
 Files/FilterModels/
+
+Crawler/__pycache__/
+
+Crawler/migrations/
