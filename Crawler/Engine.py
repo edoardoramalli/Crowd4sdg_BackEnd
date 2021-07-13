@@ -5,10 +5,6 @@ import pandas as pd
 
 ## CONNECT TO TWITTER API:
 
-# consumer_key = 'BIIA4eAxf6UkpSNtxAEZLciUn'
-# consumer_secret = 'gaXrea9UecJ61XXgvIhDHstjE6QhfNhgMoiFeD2S7LTWjnkKBJ'
-
-
 def authenticate(consumer_key, consumer_secret):
     auth = tweepy.AppAuthHandler(consumer_key, consumer_secret)
     return tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
