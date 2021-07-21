@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from Filter.Filters import *
 from PIL import Image, ImageFile
 from io import StringIO, BytesIO
+from requests_cache import CachedSession
 
 import pandas as pd
 import requests
@@ -13,6 +14,8 @@ from hashlib import sha1
 
 
 class FilterCSV(APIView):  # Extend from the view you need
+
+    session = CachedSession(expire_after=86400) # 1 day in seconds
 
     available_filters = {'MemeDetector': MemeDetector(),
                          # 'NSFWClassifier': 2,
@@ -87,7 +90,7 @@ class FilterCSV(APIView):  # Extend from the view you need
             try:
                 # Download the image
                 url = str(row[column_name])
-                r = requests.get(url=url)
+                r = FilterCSV.session.get(url=url)
                 ImageFile.LOAD_TRUNCATED_IMAGES = True
                 image_data = Image.open(BytesIO(r.content)).convert('RGB')
 
