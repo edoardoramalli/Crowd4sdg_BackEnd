@@ -84,15 +84,13 @@ if r.status_code == 200:
 else:
     print('Error {} - {}'.format(r.status_code, r.text))
 
-
-
 #  ----------------------   CRAWL and FILTER GET EXAMPLE   ------------------------
 print('CRAWL and FILTER GET')
 
 r = requests.get(f'http://{address}/Crawler/API/CrawlAndFilter',
                  params={
                      'confidence_threshold_list': [0.89],
-                     'filter_name_list': 'MemeDetector',
+                     'filter_name_list': ['MemeDetector'],
                      'column_name': 'media_url',
                      'query': 'dog',
                      'count': 5})
@@ -105,18 +103,16 @@ if r.status_code == 200:
 else:
     print('Error {} - {}'.format(r.status_code, r.text))
 
-
-
 #  ----------------------   CRAWL and FILTER POST EXAMPLE   ------------------------
 print('CRAWL and FILTER POST')
 
 r = requests.post(f'http://{address}/Crawler/API/CrawlAndFilter',
-                 params={
-                     'confidence_threshold_list': [0.89],
-                     'filter_name_list': 'MemeDetector',
-                     'column_name': 'media_url',
-                     'query': 'dog',
-                     'count': 5})
+                  json={
+                      'confidence_threshold_list': [0.89],
+                      'filter_name_list': ['MemeDetector'],
+                      'column_name': 'media_url',
+                      'query': 'dog',
+                      'count': 5})
 
 if r.status_code == 200:
     with open('result_crawler_filter_post.csv', 'w+') as file:

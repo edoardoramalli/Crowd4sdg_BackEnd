@@ -16,3 +16,9 @@ Files/FilterModels/
 Crawler/__pycache__/
 
 Crawler/migrations/
+
+Crawler/Views/__pycache__/
+
+Filter/Views/__pycache__/
+
+http_cache.sqlite
