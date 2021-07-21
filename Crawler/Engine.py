@@ -3,22 +3,63 @@ import time
 import datetime
 import pandas as pd
 
-## CONNECT TO TWITTER API:
 
 def authenticate(consumer_key, consumer_secret):
     auth = tweepy.AppAuthHandler(consumer_key, consumer_secret)
     return tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
 
-# if (not api):
-#     print("CANNOT authenticate with Twitter API")
-# else:
-#     print("Twitter API authentication successful!")
-
-
-## crawl() function returns a Pandas DataFrame
-
 def crawl(api, query, count):
+    '''
+    q –
+    he search query string of 500 characters maximum, including operators.
+    Queries may additionally be limited by complexity
+
+    geocode -
+    Returns tweets by users located within a given radius of the given latitude/longitude.
+    The location is preferentially taking from the Geotagging API, but will fall back to their Twitter profile. The parameter value is specified by “latitide,longitude,radius”, where radius units must be specified as either “mi” (miles) or “km” (kilometers). Note that you cannot use the near operator via the API to geocode arbitrary locations; however you can use this geocode parameter to search near geocodes directly.
+    A maximum of 1,000 distinct “sub-regions” will be considered when using the radius modifier.
+
+    lang -
+    Restricts tweets to the given language, given by an ISO 639-1 code. Language detection is best-effort.
+
+    locale -
+    Specify the language of the query you are sending (only ja is currently effective).
+    This is intended for language-specific consumers and the default should work in the majority of cases.
+
+    result_type -
+    Specifies what type of search results you would prefer to receive.
+    The current default is “mixed.” Valid values include:
+        mixed : include both popular and real time results in the response
+        recent : return only the most recent results in the response
+        popular : return only the most popular results in the response
+
+    count -
+    The number of results to try and retrieve per page.
+
+    until -
+    Returns tweets created before the given date. Date should be formatted as YYYY-MM-DD.
+    Keep in mind that the search index has a 7-day limit.
+    In other words, no tweets will be found for a date older than one week.
+
+    since_id -
+    Returns only statuses with an ID greater than (that is, more recent than) the specified ID.
+    There are limits to the number of Tweets which can be accessed through the API.
+    If the limit of Tweets has occurred since the since_id, the since_id will be forced to the oldest ID available.
+
+    max_id -
+    Returns only statuses with an ID less than (that is, older than) or equal to the specified ID.
+
+    include_entities -
+    The entities node will not be included when set to false. Defaults to true.
+
+
+    :param api:
+    :param query:
+    :param count:
+    :return:
+    '''
+
     # modify query to filter retweets and require images
     searchQuery = query
     searchQuery += ' -filter:retweets'  # don't retrieve retweets
@@ -27,7 +68,7 @@ def crawl(api, query, count):
 
     # settings:
     maxTweets = count
-    tweetsPerQry = 100  # Number of tweets retrieved each request (100 is maximum)
+    tweetsPerQry = min(100, count)  # Number of tweets retrieved each request (100 is maximum)
 
     # variables:
     twts = []  # tweets recovered thus far
@@ -41,9 +82,13 @@ def crawl(api, query, count):
         try:
 
             if (max_id <= 0):  # start from the most recent tweet
-                new_tweets = api.search(q=searchQuery, count=tweetsPerQry, tweet_mode='extended')
+                new_tweets = api.search(q=searchQuery,
+                                        count=tweetsPerQry,
+                                        tweet_mode='extended')
             else:  # start from tweet with id = max_id - 1
-                new_tweets = api.search(q=searchQuery, count=tweetsPerQry, max_id=str(max_id - 1),
+                new_tweets = api.search(q=searchQuery,
+                                        count=tweetsPerQry,
+                                        max_id=str(max_id - 1),
                                         tweet_mode='extended')
 
             # stop if no more tweets are found

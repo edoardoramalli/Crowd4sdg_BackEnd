@@ -16,15 +16,24 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import render
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.status import HTTP_500_INTERNAL_SERVER_ERROR, HTTP_200_OK, HTTP_400_BAD_REQUEST
+
 
 
 def home(request):
     return render(request, 'index.html')
+
+@api_view(['GET'])
+def CheckConnection(request):
+    return Response('The server is reachable!', HTTP_200_OK)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('Filter/', include('Filter.urls')),
     path('Crawler/', include('Crawler.urls')),
+    path('CheckConnection', CheckConnection),
     path('', home, name='home'),
 ]
